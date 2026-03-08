@@ -3,291 +3,764 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>myto labs — Leading Diagnostic & Pathology Laboratory</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Myto Labs — Precision Diagnostics You Can Trust</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0a1628;
-    --teal: #0d7377;
-    --teal-light: #14a085;
-    --gold: #e8a045;
-    --cream: #faf7f2;
-    --white: #ffffff;
-    --gray: #6b7280;
-    --light-gray: #f4f6f8;
+    --cream: #F8F4EE;
+    --white: #FDFCFA;
+    --ink: #1A1612;
+    --charcoal: #2E2A26;
+    --warm-gray: #8A8278;
+    --accent: #C4873A;
+    --accent-light: #E8B97A;
+    --accent-pale: #F5E8D5;
+    --teal: #1E6B6B;
+    --teal-light: #2A8A8A;
+    --border: rgba(26,22,18,0.1);
+    --shadow: 0 4px 40px rgba(26,22,18,0.08);
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); overflow-x: hidden; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* NAV */
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── Custom Cursor ── */
+  .cursor {
+    position: fixed; top: 0; left: 0; z-index: 9999;
+    pointer-events: none; mix-blend-mode: multiply;
+  }
+  .cursor-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.18s ease;
+    opacity: 0.6;
+  }
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring { transform: translate(-50%, -50%) scale(1.6); opacity: 1; }
+
+  /* ── Nav ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 5vw;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 60px;
-    background: rgba(10,22,40,0.96);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    animation: slideDown .6s ease;
+    height: 72px;
+    background: rgba(248,244,238,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
   }
-  @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-  .nav-logo { display: flex; align-items: center; gap: 12px; }
-  .nav-logo img { height: 38px; }
-  .nav-logo span { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white); letter-spacing: .5px; }
-  .nav-links { display: flex; gap: 36px; }
-  .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: .875rem; font-weight: 500; letter-spacing: .3px; transition: color .2s; }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-cta {
-    background: var(--teal); color: white; border: none; padding: 10px 24px;
-    border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: .875rem;
-    font-weight: 600; cursor: pointer; transition: background .2s, transform .15s;
-  }
-  .nav-cta:hover { background: var(--teal-light); transform: translateY(-1px); }
+  nav.scrolled { box-shadow: 0 2px 20px rgba(26,22,18,0.08); }
 
-  /* HERO */
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--ink);
+  }
+  .nav-logo-mark {
+    width: 36px; height: 36px;
+    background: var(--teal);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo-sub { font-size: 0.65rem; color: var(--warm-gray); letter-spacing: 0.12em; text-transform: uppercase; margin-top: -2px; }
+
+  .nav-links { display: flex; align-items: center; gap: 2.5rem; }
+  .nav-links a {
+    text-decoration: none; color: var(--charcoal);
+    font-size: 0.85rem; font-weight: 400;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    position: relative; padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px; background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--teal); color: white !important;
+    padding: 10px 22px; border-radius: 6px;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--teal-light) !important; color: white !important; }
+
+  .nav-hamburger { display: none; background: none; border: none; cursor: none; flex-direction: column; gap: 5px; padding: 4px; }
+  .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--ink); transition: all 0.3s; }
+
+  /* ── Hero ── */
   .hero {
     min-height: 100vh;
-    background: var(--navy);
-    display: grid; grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 120px 60px 80px;
-    position: relative; overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 72px;
+    overflow: hidden;
   }
-  .hero::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse 700px 700px at 75% 50%, rgba(13,115,119,.25) 0%, transparent 70%);
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8vw 5vw 8vw 8vw;
+    position: relative;
   }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(232,160,69,.12); border: 1px solid rgba(232,160,69,.3);
-    color: var(--gold); padding: 6px 16px; border-radius: 50px;
-    font-size: .78rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
-    margin-bottom: 28px; animation: fadeUp .7s .2s both;
+    background: var(--accent-pale); border: 1px solid var(--accent-light);
+    color: var(--accent); border-radius: 100px;
+    padding: 6px 14px; font-size: 0.75rem;
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    margin-bottom: 2rem;
+    width: fit-content;
+    animation: fadeSlideUp 0.8s ease both;
   }
-  .hero-badge::before { content: '●'; font-size: .5rem; }
-  .hero-text { position: relative; z-index: 1; }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.6rem, 4.5vw, 4rem);
-    font-weight: 900; color: var(--white);
-    line-height: 1.1; margin-bottom: 24px;
-    animation: fadeUp .7s .35s both;
+  .hero-badge-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+
+  .hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--ink);
+    animation: fadeSlideUp 0.8s ease 0.15s both;
   }
-  .hero h1 em { font-style: italic; color: var(--teal-light); }
-  .hero p {
-    color: rgba(255,255,255,0.65);
-    font-size: 1.05rem; line-height: 1.8; max-width: 520px;
-    margin-bottom: 40px; animation: fadeUp .7s .5s both;
+  .hero-h1 em { font-style: italic; color: var(--teal); }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1rem; font-weight: 300;
+    color: var(--warm-gray); line-height: 1.7;
+    max-width: 440px;
+    animation: fadeSlideUp 0.8s ease 0.3s both;
   }
-  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp .7s .65s both; }
+
+  .hero-actions {
+    display: flex; gap: 1rem; align-items: center; margin-top: 2.5rem; flex-wrap: wrap;
+    animation: fadeSlideUp 0.8s ease 0.45s both;
+  }
   .btn-primary {
-    background: var(--teal); color: white; padding: 14px 32px;
-    border-radius: 50px; font-weight: 600; font-size: .95rem;
-    text-decoration: none; transition: all .2s; border: 2px solid var(--teal);
-    display: inline-flex; align-items: center; gap: 8px;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--teal); color: white;
+    padding: 14px 28px; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 500;
+    text-decoration: none; transition: all 0.25s;
+    border: none; cursor: none;
   }
-  .btn-primary:hover { background: var(--teal-light); border-color: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,115,119,.4); }
-  .btn-outline {
-    background: transparent; color: white; padding: 14px 32px;
-    border-radius: 50px; font-weight: 600; font-size: .95rem;
-    text-decoration: none; transition: all .2s; border: 2px solid rgba(255,255,255,.25);
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30,107,107,0.3); }
+  .btn-secondary {
     display: inline-flex; align-items: center; gap: 8px;
+    color: var(--ink); font-size: 0.9rem; font-weight: 400;
+    text-decoration: none;
+    padding: 14px 20px;
+    border-radius: 8px; border: 1px solid var(--border);
+    transition: all 0.25s; background: white; cursor: none;
   }
-  .btn-outline:hover { border-color: white; background: rgba(255,255,255,.08); }
-  .hero-right { position: relative; z-index: 1; display: flex; justify-content: center; animation: fadeUp .7s .4s both; }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem;
+    border-top: 1px solid var(--border); padding-top: 2rem;
+    animation: fadeSlideUp 0.8s ease 0.6s both;
+  }
+  .hero-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 600; color: var(--ink);
+  }
+  .hero-stat-label { font-size: 0.75rem; color: var(--warm-gray); letter-spacing: 0.04em; margin-top: 2px; }
+
+  .hero-right {
+    background: var(--teal);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    padding: 5vw;
+    animation: fadeIn 1s ease 0.3s both;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(44,140,140,0.4), transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(10,50,50,0.5), transparent 60%);
+  }
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; gap: 1rem;
+    width: 100%; max-width: 380px;
+  }
   .hero-card {
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,.1);
-    border-radius: 24px; padding: 40px; backdrop-filter: blur(20px);
-    max-width: 400px; width: 100%;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px; padding: 1.25rem 1.5rem;
+    backdrop-filter: blur(10px); color: white;
+    transition: transform 0.3s;
   }
-  .hero-card-logo { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
-  .hero-card-logo img { height: 50px; }
-  .hero-card-logo .name { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: white; }
-  .hero-card-logo .tagline { font-size: .78rem; color: rgba(255,255,255,.5); }
-  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .stat {
-    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
-    border-radius: 14px; padding: 20px;
+  .hero-card:hover { transform: translateX(-6px); }
+  .hero-card-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.65; margin-bottom: 0.4rem; }
+  .hero-card-value { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; }
+  .hero-card-sub { font-size: 0.75rem; opacity: 0.75; margin-top: 0.2rem; }
+  .hero-card.accent-card { background: var(--accent); border-color: transparent; }
+  .hero-deco-circle {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.08);
+    animation: slowRotate 30s linear infinite;
   }
-  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--gold); display: block; }
-  .stat-label { font-size: .78rem; color: rgba(255,255,255,.5); margin-top: 4px; }
-  .hero-contact { margin-top: 24px; padding: 20px; background: rgba(13,115,119,.2); border-radius: 14px; border: 1px solid rgba(13,115,119,.3); }
-  .hero-contact p { color: rgba(255,255,255,.6); font-size: .8rem; margin-bottom: 8px; }
-  .hero-contact a { color: var(--teal-light); font-size: 1rem; font-weight: 600; text-decoration: none; display: block; }
-  .hero-contact a:hover { color: white; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-deco-circle:nth-child(1) { width: 400px; height: 400px; top: -10%; right: -15%; }
+  .hero-deco-circle:nth-child(2) { width: 250px; height: 250px; bottom: 5%; left: -10%; animation-direction: reverse; }
 
-  /* SECTION BASE */
-  section { padding: 100px 60px; }
-  .section-tag { display: inline-block; font-size: .75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
-  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; line-height: 1.15; color: var(--navy); max-width: 600px; margin-bottom: 20px; }
+  /* ── Section Styles ── */
+  section { padding: 7rem 5vw; }
+
+  .section-label {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--accent); font-weight: 500; margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300; line-height: 1.15;
+    color: var(--ink);
+  }
   .section-title em { font-style: italic; color: var(--teal); }
-  .section-desc { color: var(--gray); font-size: 1.05rem; line-height: 1.8; max-width: 580px; }
+  .section-sub {
+    font-size: 0.95rem; color: var(--warm-gray); line-height: 1.7;
+    max-width: 520px; margin-top: 0.75rem; font-weight: 300;
+  }
 
-  /* SERVICES */
-  #services { background: var(--white); }
-  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; flex-wrap: wrap; gap: 20px; }
-  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; }
+  /* ── Services ── */
+  .services { background: var(--white); }
+  .services-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+  }
   .service-card {
-    background: var(--cream); border: 1px solid rgba(0,0,0,.07);
-    border-radius: 20px; padding: 36px 30px;
-    transition: all .3s ease; position: relative; overflow: hidden; cursor: default;
+    background: var(--cream);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 20px; padding: 2.25rem 1.875rem;
+    transition: all 0.3s ease; cursor: default;
+    position: relative; overflow: hidden;
   }
   .service-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: var(--teal); transform: scaleX(0); transform-origin: left; transition: transform .3s ease;
+    background: var(--teal); transform: scaleX(0);
+    transform-origin: left; transition: transform 0.3s ease;
   }
-  .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,.1); border-color: transparent; }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); border-color: transparent; }
   .service-card:hover::before { transform: scaleX(1); }
-  .service-icon { width: 54px; height: 54px; border-radius: 14px; background: rgba(13,115,119,.1); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; font-size: 1.6rem; }
-  .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
-  .service-card p { color: var(--gray); font-size: .9rem; line-height: 1.7; margin-bottom: 20px; }
-  .service-tests { list-style: none; }
-  .service-tests li { font-size: .82rem; color: var(--navy); padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; gap: 8px; }
-  .service-tests li::before { content: '→'; color: var(--teal); font-weight: 700; font-size: .85rem; }
 
-  /* POPULAR TESTS */
-  #tests { background: var(--navy); }
-  #tests .section-title { color: white; }
-  #tests .section-title em { color: var(--gold); }
-  .tests-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 50px; }
-  .test-pill { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 28px 24px; display: flex; align-items: center; gap: 16px; transition: all .3s; }
-  .test-pill:hover { background: rgba(13,115,119,.25); border-color: var(--teal); transform: translateY(-4px); }
-  .test-pill-icon { width: 46px; height: 46px; border-radius: 12px; background: rgba(13,115,119,.3); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
-  .test-pill span { color: white; font-weight: 600; font-size: .95rem; }
+  .service-icon {
+    width: 54px; height: 54px; border-radius: 14px;
+    background: rgba(30,107,107,0.1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem; font-size: 1.6rem;
+  }
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--ink);
+  }
+  .service-desc { font-size: 0.9rem; color: var(--warm-gray); line-height: 1.7; margin-bottom: 1.25rem; font-weight: 300; }
+  .service-tests { list-style: none; padding: 0; }
+  .service-tests li {
+    font-size: 0.82rem; color: var(--ink);
+    padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .service-tests li::before { content: '→'; color: var(--teal); font-weight: 700; font-size: 0.85rem; }
 
-  /* PROCESS */
-  #process { background: var(--cream); }
-  .process-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; margin-top: 60px; position: relative; }
-  .process-step { text-align: center; padding: 30px 12px; position: relative; }
-  .process-step:not(:last-child)::after { content: ''; position: absolute; top: 42px; right: 0; width: 50%; height: 2px; background: linear-gradient(to right, var(--teal), rgba(13,115,119,.2)); }
-  .process-step:not(:first-child)::before { content: ''; position: absolute; top: 42px; left: 0; width: 50%; height: 2px; background: linear-gradient(to right, rgba(13,115,119,.2), var(--teal)); }
-  .step-num { width: 56px; height: 56px; border-radius: 50%; background: var(--teal); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin: 0 auto 16px; position: relative; z-index: 1; box-shadow: 0 0 0 6px rgba(13,115,119,.15); }
-  .process-step h4 { font-size: .85rem; font-weight: 600; color: var(--navy); }
+  /* ── Popular Tests ── */
+  .tests { background: var(--cream); }
+  .tests-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; }
+  .tests-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .test-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+    transition: all 0.25s; cursor: default;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .test-card:hover { border-color: var(--teal); transform: translateY(-4px); box-shadow: var(--shadow); }
+  .test-icon { font-size: 1.5rem; }
+  .test-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: var(--ink); line-height: 1.3; }
+  .test-type { font-size: 0.72rem; color: var(--warm-gray); letter-spacing: 0.06em; text-transform: uppercase; }
 
-  /* WHY US */
-  #why { background: var(--white); }
-  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 50px; }
-  .why-features { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  .why-feature { padding: 28px; background: var(--cream); border-radius: 16px; border: 1px solid rgba(0,0,0,.06); transition: all .2s; }
-  .why-feature:hover { border-color: var(--teal); box-shadow: 0 8px 24px rgba(13,115,119,.1); }
-  .why-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
-  .why-feature h4 { font-weight: 700; font-size: .95rem; color: var(--navy); margin-bottom: 6px; }
-  .why-feature p { font-size: .82rem; color: var(--gray); line-height: 1.6; }
-  .why-accent-box { background: var(--navy); border-radius: 24px; padding: 50px 40px; display: flex; flex-direction: column; gap: 28px; }
-  .why-accent-box h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: white; }
-  .why-big-stat { display: flex; align-items: baseline; gap: 8px; }
-  .why-big-stat .num { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; color: var(--gold); }
-  .why-big-stat .unit { color: rgba(255,255,255,.5); font-size: .9rem; }
+  /* ── Process ── */
+  .process { background: var(--teal); color: white; }
+  .process .section-title { color: white; }
+  .process .section-title em { color: var(--accent-light); }
+  .process .section-sub { color: rgba(255,255,255,0.65); }
 
-  /* VISIT */
-  #visit { background: linear-gradient(135deg, var(--teal) 0%, var(--navy) 100%); text-align: center; padding: 100px 60px; }
-  #visit .section-tag { color: var(--gold); }
-  #visit .section-title { color: white; max-width: none; margin: 0 auto 20px; }
-  #visit .section-desc { color: rgba(255,255,255,.65); margin: 0 auto 50px; }
-  .visit-cards { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
-  .visit-card { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 20px; padding: 32px 28px; min-width: 240px; text-align: center; backdrop-filter: blur(10px); transition: all .2s; }
-  .visit-card:hover { background: rgba(255,255,255,.18); transform: translateY(-4px); }
-  .visit-card .vc-icon { font-size: 2.4rem; margin-bottom: 16px; display: block; }
-  .visit-card h4 { color: white; font-weight: 700; margin-bottom: 8px; }
-  .visit-card p { color: rgba(255,255,255,.65); font-size: .88rem; line-height: 1.6; }
-  .visit-card a { color: var(--gold); text-decoration: none; font-weight: 600; }
-  .visit-card a:hover { color: white; }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 0; margin-top: 4rem; position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 28px; left: calc(8.333% + 16px); right: calc(8.333% + 16px);
+    height: 1px; background: rgba(255,255,255,0.2);
+    z-index: 0;
+  }
+  .process-step {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    text-align: center; padding: 0 1rem; position: relative; z-index: 1;
+  }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300; color: white;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s;
+  }
+  .process-step:hover .step-num { background: var(--accent); border-color: var(--accent); }
+  .step-label { font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.4; }
 
-  /* FOOTER */
-  footer { background: var(--navy); padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,.08); flex-wrap: wrap; gap: 20px; }
-  .footer-logo { display: flex; align-items: center; gap: 12px; }
-  .footer-logo img { height: 32px;}
-  .footer-logo span { font-family: 'Playfair Display', serif; color: white; font-size: 1.1rem; }
-  footer p { color: rgba(255,255,255,.35); font-size: .82rem; }
-  .footer-accred { display: flex; gap: 12px; }
-  .badge-pill { background: rgba(255,255,255,.08); color: rgba(255,255,255,.6); padding: 6px 14px; border-radius: 50px; font-size: .75rem; font-weight: 600; border: 1px solid rgba(255,255,255,.12); }
+  /* ── Why Us ── */
+  .why { background: var(--white); }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .why-features { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+  .why-feature {
+    padding: 1.75rem; border: 1px solid var(--border);
+    border-radius: 12px; background: var(--cream);
+    transition: all 0.3s;
+  }
+  .why-feature:hover { border-color: var(--teal); background: white; box-shadow: var(--shadow); }
+  .why-feature-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .why-feature-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); margin-bottom: 0.4rem; }
+  .why-feature-desc { font-size: 0.82rem; color: var(--warm-gray); line-height: 1.6; font-weight: 300; }
 
-  /* REVEAL */
-  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+  .why-aside {
+    background: var(--teal); color: white;
+    border-radius: 20px; padding: 3rem;
+    display: flex; flex-direction: column; gap: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .why-aside::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .why-aside-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; line-height: 1.2; }
+  .why-stat-row { display: flex; flex-direction: column; gap: 0.3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.15); }
+  .why-stat-big { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; }
+  .why-stat-desc { font-size: 0.8rem; opacity: 0.7; }
+  .why-locations { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .why-loc-tag {
+    font-size: 0.72rem; background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;
+    padding: 4px 10px; color: rgba(255,255,255,0.85);
+  }
+
+  /* ── Contact ── */
+  .contact { background: var(--cream); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .contact-info-cards { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2.5rem; }
+  .contact-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem 1.75rem;
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    transition: all 0.25s;
+  }
+  .contact-card:hover { border-color: var(--teal); box-shadow: var(--shadow); }
+  .contact-card-icon {
+    width: 42px; height: 42px; border-radius: 10px;
+    background: var(--accent-pale); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .contact-card-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--warm-gray); margin-bottom: 0.3rem; }
+  .contact-card-value { font-size: 0.95rem; color: var(--ink); line-height: 1.5; }
+  .contact-card-value a { color: var(--teal); text-decoration: none; }
+  .contact-card-value a:hover { text-decoration: underline; }
+
+  /* Map placeholder */
+  .map-placeholder {
+    background: var(--teal);
+    border-radius: 16px; height: 100%; min-height: 420px;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .map-placeholder::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 40% 60%, rgba(255,255,255,0.06), transparent 60%);
+  }
+  .map-inner { text-align: center; color: white; position: relative; z-index: 1; padding: 2rem; }
+  .map-pin { font-size: 3rem; margin-bottom: 1rem; }
+  .map-label { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; margin-bottom: 0.5rem; }
+  .map-address { font-size: 0.82rem; opacity: 0.7; line-height: 1.7; }
+  .map-link {
+    display: inline-block; margin-top: 1.5rem;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+    color: white; text-decoration: none;
+    padding: 10px 22px; border-radius: 6px; font-size: 0.82rem;
+    transition: background 0.2s;
+  }
+  .map-link:hover { background: rgba(255,255,255,0.25); }
+  .map-grid-lines {
+    position: absolute; inset: 0; opacity: 0.06;
+    background-image: linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.7);
+    padding: 3rem 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: white; font-weight: 300; }
+  .footer-badges { display: flex; gap: 0.75rem; }
+  .footer-badge {
+    font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 4px;
+    color: rgba(255,255,255,0.6);
+  }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+
+  /* ── Reveal Animations ── */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  @keyframes slowRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* RESPONSIVE */
+  /* ── Mobile Nav ── */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 99;
+    background: var(--cream); padding: 6rem 5vw 3rem;
+    flex-direction: column; gap: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300;
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--border); padding-bottom: 1.25rem;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--teal); }
+  .mobile-menu-cta {
+    margin-top: 1rem; background: var(--teal) !important; color: white !important;
+    text-align: center; border-radius: 8px; padding: 1rem !important;
+    border-bottom: none !important; font-family: 'DM Sans', sans-serif !important;
+    font-size: 1rem !important;
+  }
+
+  /* ── Technology Section ── */
+  .technology { background: var(--ink); color: white; }
+  .technology .section-label { color: var(--accent-light); }
+  .technology .section-title { color: white; }
+  .technology .section-title em { color: var(--accent-light); }
+  .technology .section-sub { color: rgba(255,255,255,0.5); }
+
+  .tech-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    margin-top: 4rem;
+  }
+
+  .machine-card {
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; overflow: hidden;
+    background: rgba(255,255,255,0.04);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .machine-card:hover { border-color: rgba(196,135,58,0.5); transform: translateY(-4px); }
+
+  .machine-header {
+    padding: 2rem 2rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+  }
+  .machine-brand {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: white;
+    border-radius: 6px; padding: 4px 10px;
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .machine-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 400; color: white; line-height: 1.1;
+  }
+  .machine-type {
+    font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.4rem;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .machine-badge {
+    flex-shrink: 0;
+    width: 64px; height: 64px; border-radius: 14px;
+    background: rgba(255,255,255,0.07);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+  }
+
+  .machine-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .machine-stat {
+    padding: 1.25rem 1.5rem; border-right: 1px solid rgba(255,255,255,0.07);
+  }
+  .machine-stat:last-child { border-right: none; }
+  .machine-stat-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 400; color: var(--accent-light);
+  }
+  .machine-stat-key { font-size: 0.67rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.09em; margin-top: 2px; }
+
+  .machine-body { padding: 1.75rem 2rem; }
+  .machine-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem; }
+
+  .machine-features { display: flex; flex-direction: column; gap: 0.6rem; }
+  .machine-feature {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.5;
+  }
+  .machine-feature-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0; margin-top: 6px;
+  }
+
+  .machine-assays {
+    margin-top: 1.5rem; padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+  .assay-chip {
+    font-size: 0.68rem; padding: 3px 9px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px; color: rgba(255,255,255,0.6);
+    letter-spacing: 0.04em;
+  }
+
+  .tech-footnote {
+    margin-top: 3rem; padding: 1.5rem 2rem;
+    border: 1px solid rgba(196,135,58,0.2);
+    border-radius: 12px; background: rgba(196,135,58,0.05);
+    display: flex; align-items: center; gap: 1.25rem;
+  }
+  .tech-footnote-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .tech-footnote-text { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+  .tech-footnote-text strong { color: var(--accent-light); font-weight: 500; }
+
   @media (max-width: 900px) {
-    nav { padding: 16px 24px; }
-    .nav-links { display: none; }
-    section, .hero { padding: 80px 24px; }
-    .hero { grid-template-columns: 1fr; padding-top: 110px; gap: 40px; }
-    .hero h1 { font-size: 2.4rem; }
+    .tech-grid { grid-template-columns: 1fr; }
+    .machine-stats { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .machine-stats { grid-template-columns: repeat(2, 1fr); }
+    .machine-stat:nth-child(2) { border-right: none; }
+    .machine-stat:nth-child(3) { grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.07); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1100px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 40vh; }
+    .tests-layout { grid-template-columns: 1fr; gap: 3rem; }
     .why-grid { grid-template-columns: 1fr; }
-    footer { padding: 32px 24px; flex-direction: column; text-align: center; }
-    .services-header { flex-direction: column; }
-    .process-grid { grid-template-columns: repeat(2, 1fr); }
-    .process-step::after, .process-step::before { display: none; }
-    #visit { padding: 80px 24px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .process-steps::before { display: none; }
+    nav .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    body { cursor: auto; }
+    .cursor { display: none; }
+  }
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .tests-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-features { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    section { padding: 5rem 5vw; }
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-logo">
-    <img src="https://i.ibb.co/29rWd9T/mytologo.png" alt="myto labs">
-    <span>myto labs</span>
-  </div>
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor">
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+</div>
+
+<!-- Nav -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo" style="gap:0;text-decoration:none">
+    <!-- Real mytolabs logo: mitochondria icon + wordmark -->
+    <svg height="40" viewBox="0 0 220 48" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <!-- Mitochondria icon (real logo image) -->
+      <image href="data:image/png;base64,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" x="0" y="2" width="38" height="42"/>
+      <!-- "mytolabs" wordmark — single text, two colours -->
+      <text y="30" font-family="'DM Sans',Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="-0.3"><tspan x="40" fill="#E8622A">myto</tspan><tspan fill="#2AAFA0">labs</tspan></text>
+      <!-- Tagline with flanking lines -->
+      <line x1="40" y1="37" x2="52" y2="37" stroke="#1E3A5F" stroke-width="1.5" stroke-linecap="round"/>
+      <text x="55" y="40" font-family="'DM Sans',Arial,sans-serif" font-size="6.5" font-weight="700" fill="#1E3A5F" letter-spacing="1.2">DISCOVER YOUR CURE</text>
+      <line x1="168" y1="37" x2="180" y2="37" stroke="#1E3A5F" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </a>
   <div class="nav-links">
     <a href="#services">Services</a>
     <a href="#tests">Tests</a>
+    <a href="#technology">Technology</a>
     <a href="#process">Process</a>
     <a href="#why">Why Us</a>
-    <a href="#visit">Contact</a>
+    <a href="#contact">Contact</a>
+    <a href="tel:+918678999009" class="nav-cta">Book Now</a>
   </div>
-  <button class="nav-cta" onclick="document.getElementById('visit').scrollIntoView({behavior:'smooth'})">Book Now</button>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMobileMenu()">Services</a>
+  <a href="#tests" onclick="closeMobileMenu()">Tests</a>
+  <a href="#technology" onclick="closeMobileMenu()">Technology</a>
+  <a href="#process" onclick="closeMobileMenu()">Process</a>
+  <a href="#why" onclick="closeMobileMenu()">Why Us</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  <a href="tel:+918678999009" class="mobile-menu-cta" onclick="closeMobileMenu()">📞 Book Now — Call Us</a>
+</div>
+
+<!-- Hero -->
 <section class="hero">
-  <div class="hero-text">
-    <div class="hero-badge">NABL Accredited Laboratory</div>
-    <h1>Precision Diagnostics<br>You Can <em>Trust</em></h1>
-    <p>Advanced Immunology, Biochemistry, Microbiology, and Histopathology testing. Serving Hosur, Krishnagiri & Bangalore with accurate, timely results.</p>
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      NABL Accredited Laboratory
+    </div>
+    <h1 class="hero-h1">Precision<br>Diagnostics<br>You Can <em>Trust</em></h1>
+    <p class="hero-sub">Advanced Immunology, Biochemistry, Microbiology, and Histopathology testing — serving Hosur, Krishnagiri & Bangalore with accurate, timely results.</p>
     <div class="hero-actions">
-      <a href="tel:+918678999009" class="btn-primary">📞 Call Now</a>
-      <a href="#services" class="btn-outline">Our Services →</a>
+      <a href="tel:+918678999009" class="btn-primary">
+        <span>📞</span> Call Now
+      </a>
+      <a href="#services" class="btn-secondary">
+        Our Services <span>→</span>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">20K</div>
+        <div class="hero-stat-label">Tests Per Year</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-label">Collection Centres</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">4</div>
+        <div class="hero-stat-label">Years of Legacy</div>
+      </div>
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-card">
-      <div class="hero-card-logo">
-        <img src="https://i.ibb.co/29rWd9T/mytologo.png" alt="myto labs">
-        <div>
-          <div class="name">myto labs</div>
-          <div class="tagline">Diagnostic & Pathology Centre</div>
+    <div class="hero-deco-circle"></div>
+    <div class="hero-deco-circle"></div>
+    <div class="hero-visual">
+      <!-- Logo Display in Hero -->
+      <div style="padding:1.25rem 1.5rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:16px;backdrop-filter:blur(10px);margin-bottom:0.25rem">
+        <svg height="44" viewBox="0 0 220 48" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:200px">
+          <!-- Mitochondria icon (real logo image) -->
+          <image href="data:image/png;base64,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" x="0" y="2" width="38" height="42"/>
+          <!-- "mytolabs" wordmark -->
+          <text y="30" font-family="'DM Sans',Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="-0.3"><tspan x="40" fill="white">myto</tspan><tspan fill="rgba(255,255,255,0.75)">labs</tspan></text>
+          <!-- Tagline -->
+          <line x1="40" y1="37" x2="52" y2="37" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <text x="55" y="40" font-family="'DM Sans',Arial,sans-serif" font-size="6.5" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.2">DISCOVER YOUR CURE</text>
+          <line x1="168" y1="37" x2="180" y2="37" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div style="display:flex;gap:5px;margin-top:8px">
+          <span style="font-size:0.52rem;padding:2px 7px;border:1px solid rgba(196,135,58,0.5);border-radius:3px;color:rgba(232,185,122,0.85);letter-spacing:0.1em">NABL</span>
+          <span style="font-size:0.52rem;padding:2px 7px;border:1px solid rgba(255,255,255,0.18);border-radius:3px;color:rgba(255,255,255,0.45);letter-spacing:0.1em">ISO</span>
         </div>
       </div>
-      <div class="hero-stats">
-        <div class="stat"><span class="stat-num">20M+</span><div class="stat-label">Tests Per Year</div></div>
-        <div class="stat"><span class="stat-num">2000+</span><div class="stat-label">Collection Centres</div></div>
-        <div class="stat"><span class="stat-num">40</span><div class="stat-label">Years of Legacy</div></div>
-        <div class="stat"><span class="stat-num">100%</span><div class="stat-label">Hygienic Process</div></div>
+      <div class="hero-card accent-card">
+        <div class="hero-card-label">Today's Turnaround</div>
+        <div class="hero-card-value">Same-day Reports</div>
+        <div class="hero-card-sub">Results delivered digitally, anytime</div>
       </div>
-      <div class="hero-contact">
-        <p>📍 1st Floor, 28/29 GKV Towers, Hosur – 635 109</p>
-        <a href="tel:+918678999009">+91 86789 99009</a>
-        <a href="tel:+918111001686">+91 81110 01686</a>
+      <div class="hero-card">
+        <div class="hero-card-label">Coverage Area</div>
+        <div class="hero-card-value">Hosur · Krishnagiri</div>
+        <div class="hero-card-sub">+ Bangalore & surrounding areas</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-label">Home Collection</div>
+        <div class="hero-card-value">30-min Pickup</div>
+        <div class="hero-card-sub">Trained phlebotomists at your doorstep</div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="services">
+<!-- Services -->
+<section class="services" id="services">
   <div class="services-header reveal">
     <div>
-      <div class="section-tag">What We Offer</div>
+      <div class="section-label">What We Offer</div>
       <h2 class="section-title">Advanced <em>Diagnostic</em> Services</h2>
-      <p class="section-desc">Powered by state-of-the-art equipment and expert pathologists for accurate, reliable results every time.</p>
+      <p class="section-sub">State-of-the-art equipment and expert pathologists for accurate, reliable results every time.</p>
     </div>
   </div>
-  <div class="services-grid">
-    <div class="service-card reveal">
+  <div class="services-grid reveal">
+    <div class="service-card">
       <div class="service-icon">🧬</div>
-      <h3>Immunology Testing</h3>
-      <p>State-of-the-art testing using the Roche cobas e411 analyzer for immune disorders, hormones, and infectious diseases.</p>
+      <div class="service-title">Immunology Testing</div>
+      <div class="service-desc">State-of-the-art testing using the Roche cobas e411 analyzer for immune disorders, hormones, and infectious diseases.</div>
       <ul class="service-tests">
         <li>Autoimmune profile tests</li>
         <li>Hormone assays</li>
@@ -296,10 +769,10 @@
         <li>Infectious disease serology</li>
       </ul>
     </div>
-    <div class="service-card reveal">
+    <div class="service-card">
       <div class="service-icon">🔬</div>
-      <h3>Biochemistry</h3>
-      <p>Comprehensive testing for routine checkups, preventive care, and chronic disease monitoring.</p>
+      <div class="service-title">Biochemistry</div>
+      <div class="service-desc">Comprehensive testing for routine checkups, preventive care, and chronic disease monitoring across all age groups.</div>
       <ul class="service-tests">
         <li>Liver Function Test (LFT)</li>
         <li>Kidney Function Test (KFT)</li>
@@ -308,10 +781,10 @@
         <li>Cardiac markers</li>
       </ul>
     </div>
-    <div class="service-card reveal">
+    <div class="service-card">
       <div class="service-icon">🦠</div>
-      <h3>Microbiology</h3>
-      <p>Accurate detection of bacterial, fungal, and mycobacterial infections with culture and sensitivity testing.</p>
+      <div class="service-title">Microbiology</div>
+      <div class="service-desc">Accurate detection of bacterial, fungal, and mycobacterial infections with culture and sensitivity testing.</div>
       <ul class="service-tests">
         <li>Culture & sensitivity</li>
         <li>Urine, blood & wound cultures</li>
@@ -320,10 +793,10 @@
         <li>Mycobacteriology</li>
       </ul>
     </div>
-    <div class="service-card reveal">
+    <div class="service-card">
       <div class="service-icon">🧫</div>
-      <h3>Histopathology</h3>
-      <p>Expert tissue examination and pathological diagnosis by experienced, qualified pathologists.</p>
+      <div class="service-title">Histopathology</div>
+      <div class="service-desc">Expert tissue examination and pathological diagnosis by experienced, qualified pathologists.</div>
       <ul class="service-tests">
         <li>Surgical pathology</li>
         <li>Biopsy analysis</li>
@@ -335,118 +808,421 @@
   </div>
 </section>
 
-<section id="tests">
+<!-- Popular Tests -->
+<section class="tests" id="tests">
+  <div class="tests-layout">
+    <div class="reveal">
+      <div class="section-label">Most Requested</div>
+      <h2 class="section-title">Popular <em>Tests</em></h2>
+      <p class="section-sub">Quick access to our most commonly requested diagnostic panels — fast, accurate, and affordable.</p>
+      <div style="margin-top:2.5rem;">
+        <a href="tel:+918678999009" class="btn-primary">Book a Test →</a>
+      </div>
+    </div>
+    <div class="tests-grid reveal">
+      <div class="test-card">
+        <div class="test-icon">🩸</div>
+        <div class="test-name">Complete Blood Count</div>
+        <div class="test-type">CBC</div>
+      </div>
+      <div class="test-card">
+        <div class="test-icon">🫀</div>
+        <div class="test-name">Liver Function Test</div>
+        <div class="test-type">LFT</div>
+      </div>
+      <div class="test-card">
+        <div class="test-icon">🧪</div>
+        <div class="test-name">CRP Quantitative</div>
+        <div class="test-type">Inflammation</div>
+      </div>
+      <div class="test-card">
+        <div class="test-icon">🦋</div>
+        <div class="test-name">Thyroid Profile</div>
+        <div class="test-type">T3 · T4 · TSH</div>
+      </div>
+      <div class="test-card">
+        <div class="test-icon">💉</div>
+        <div class="test-name">HbA1c & Blood Glucose</div>
+        <div class="test-type">Diabetes Panel</div>
+      </div>
+      <div class="test-card">
+        <div class="test-icon">🫁</div>
+        <div class="test-name">Lipid Profile</div>
+        <div class="test-type">Cardiac Risk</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Technology -->
+<section class="technology" id="technology">
   <div class="reveal">
-    <div class="section-tag">Most Requested</div>
-    <h2 class="section-title">Popular <em>Tests</em></h2>
-    <p class="section-desc" style="color:rgba(255,255,255,.55)">Quick access to our most commonly requested diagnostic panels.</p>
+    <div class="section-label">Our Equipment</div>
+    <h2 class="section-title">Laboratory <em>Technology</em></h2>
+    <p class="section-sub">mytolabs is equipped with Roche's world-class diagnostic analysers — the same platforms trusted by leading reference laboratories globally.</p>
   </div>
-  <div class="tests-grid reveal">
-    <div class="test-pill"><div class="test-pill-icon">🩸</div><span>Complete Blood Count (CBC)</span></div>
-    <div class="test-pill"><div class="test-pill-icon">🫀</div><span>Liver Function Test (LFT)</span></div>
-    <div class="test-pill"><div class="test-pill-icon">🧪</div><span>CRP Quantitative</span></div>
-    <div class="test-pill"><div class="test-pill-icon">🦋</div><span>Thyroid Profile</span></div>
-    <div class="test-pill"><div class="test-pill-icon">💉</div><span>HbA1c & Blood Glucose</span></div>
-    <div class="test-pill"><div class="test-pill-icon">🫁</div><span>Lipid Profile</span></div>
+
+  <div class="tech-grid">
+
+    <!-- cobas e 411 -->
+    <div class="machine-card reveal">
+      <div class="machine-header">
+        <div>
+          <div class="machine-brand">Roche Diagnostics</div>
+          <div class="machine-name">cobas® e 411</div>
+          <div class="machine-type">Immunoassay Analyser · ECL Technology</div>
+        </div>
+        <div class="machine-badge">🧬</div>
+      </div>
+      <div class="machine-stats">
+        <div class="machine-stat">
+          <div class="machine-stat-val">88</div>
+          <div class="machine-stat-key">Tests / Hour</div>
+        </div>
+        <div class="machine-stat">
+          <div class="machine-stat-val">9 min</div>
+          <div class="machine-stat-key">STAT Turnaround</div>
+        </div>
+        <div class="machine-stat">
+          <div class="machine-stat-val">100+</div>
+          <div class="machine-stat-key">Elecsys® Assays</div>
+        </div>
+      </div>
+      <div class="machine-body">
+        <div class="machine-desc">
+          A fully automated immunoassay analyser powered by Roche's patented ElectroChemiLuminescence (ECL) technology — the same detection method used in high-throughput reference lab platforms. It delivers superior analytical sensitivity, wider measuring ranges, and requires smaller serum volumes than conventional systems.
+        </div>
+        <div class="machine-features">
+          <div class="machine-feature">
+            <div class="machine-feature-dot"></div>
+            <span>Industry-leading 9-minute STAT results for critical cardiac markers including high-sensitivity Troponin T, CK-MB, and PTH</span>
+          </div>
+          <div class="machine-feature">
+            <div class="machine-feature-dot"></div>
+            <span>Calibration stability of 8+ weeks on most assays — fewer interruptions, consistent QC</span>
+          </div>
+          <div class="machine-feature">
+            <div class="machine-feature-dot"></div>
+            <span>Barcode-based programming: auto-detects reagents, calibrators, and controls on load</span>
+          </div>
+          <div class="machine-feature">
+            <div class="machine-feature-dot"></div>
+            <span>18 simultaneous immunology parameters available 24/7 with STAT priority access</span>
+          </div>
+          <div class="machine-feature">
+            <div class="machine-feature-dot"></div>
+            <span>Identical Elecsys® reagent chemistry to Roche's high-throughput e601 and e801 platforms — results that correlate with major hospitals</span>
+          </div>
+        </div>
+        <div class="machine-assays">
+          <span class="assay-chip">Thyroid (TSH · fT3 · fT4)</span>
+          <span class="assay-chip">High-Sensitivity Troponin T</span>
+          <span class="assay-chip">NT-proBNP</span>
+          <span class="assay-chip">CK-MB Mass</span>
+          <span class="assay-chip">D-Dimer</span>
+          <span class="assay-chip">Tumor Markers</span>
+          <span class="assay-chip">Anti-HIV · HCV · HBsAg</span>
+          <span class="assay-chip">Fertility Hormones</span>
+          <span class="assay-chip">Vitamin D Total</span>
+          <span class="assay-chip">Autoimmune Profile</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- cobas c 311 -->
+    <div class="machine-card reveal">
+      <div class="machine-header">
+        <div>
+          <div class="machine-brand">Roche Diagnostics</div>
+          <div class="machine-name">cobas® c 311</div>
+          <div class="machine-type">Clinical Chemistry Analyser · Cobas 4000 Family</div>
+        </div>
+        <div class="machine-badge">🔬</div>
+      </div>
+      <div class="machine-stats">
+        <div class="machine-stat">
+          <div class="machine-stat-val">300</div>
+          <div class="machine-stat-key">Tests / Hour</div>
+        </div>
+        <div class="machine-stat">
+          <div class="machine-stat-val">45</div>
+          <div class="machine-stat-key">Onboard Tests</div>
+        </div>
+        <div class="machine-stat">
+          <div class="machine-stat-val">91</div>
+          <div class="machine-stat-key">Assay Menu</div>
+        </div>
+      </div>
+      <div class="machine-body">
+        <div class="machine-desc">
+          The cobas® c 311 is a mid-size, fully automated discrete clinical chemistry analyser — part of Roche's cobas 4000 platform family. It consolidates routine and special chemistry workloads into a single robust system, handling serum, plasma, urine, CSF, whole blood (HbA1c), and hemolysate with ISE capability for electrolytes.
+        </div>
+        <div class="machine-features">
+          <div class="machine-feature">
+            <div class="machine-feature-dot"></div>
+            <span>Up to 300 photometric tests/hour and 450 ISE tests/hour — ideal for busy mid-volume lab workflows</span>
+          </div>
+          <div class="machine-feature">
+            <div class="machine-feature-dot"></div>
+            <span>45 onboard test positions with 42 cooled reagent cassettes — broad panel coverage without manual reagent changes</span>
+          </div>
+          <div class="machine-feature">
+            <div class="machine-feature-dot"></div>
+            <span>Contact-free ultrasonic mixing and 3-index serum integrity checks (lipemia, hemolysis, icterus) for every sample</span>
+          </div>
+          <div class="machine-feature">
+            <div class="machine-feature-dot"></div>
+            <span>Automated sample rerun, dilution, and additional sample loading during continuous operation — no interruptions</span>
+          </div>
+          <div class="machine-feature">
+            <div class="machine-feature-dot"></div>
+            <span>Barcoded cobas® reagents with auto-detection of lot numbers, calibration data, and expiry — zero manual entry errors</span>
+          </div>
+        </div>
+        <div class="machine-assays">
+          <span class="assay-chip">LFT · KFT</span>
+          <span class="assay-chip">Lipid Profile</span>
+          <span class="assay-chip">HbA1c (Whole Blood)</span>
+          <span class="assay-chip">hsCRP</span>
+          <span class="assay-chip">Blood Glucose</span>
+          <span class="assay-chip">Electrolytes (ISE)</span>
+          <span class="assay-chip">Uric Acid</span>
+          <span class="assay-chip">Cardiac Enzymes</span>
+          <span class="assay-chip">Metabolic Panel</span>
+          <span class="assay-chip">Drug Levels</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tech-footnote reveal">
+    <div class="tech-footnote-icon">🏅</div>
+    <div class="tech-footnote-text">
+      <strong>Why Roche cobas®?</strong> Roche's cobas platform is the gold standard in diagnostic medicine, used by leading hospitals and reference labs worldwide. By investing in this technology, mytolabs ensures that every patient result meets the highest international standards of accuracy — the same quality you'd expect from a major hospital, right here in Hosur.
+    </div>
   </div>
 </section>
 
-<section id="process">
-  <div class="reveal" style="text-align:center; margin-bottom: 10px;">
-    <div class="section-tag">Easy & Convenient</div>
-    <h2 class="section-title" style="margin: 0 auto 16px">How The <em>Process Works</em></h2>
-    <p class="section-desc" style="margin: 0 auto;">From your call to your report — simple, safe, and fast.</p>
+<!-- Process -->
+
+<section class="process" id="process">
+  <div style="text-align:center" class="reveal">
+    <div class="section-label" style="color:var(--accent-light)">Easy & Convenient</div>
+    <h2 class="section-title">How The <em>Process</em> Works</h2>
+    <p class="section-sub" style="margin:0.75rem auto 0; text-align:center;">From your call to your report — simple, safe, and fast.</p>
   </div>
-  <div class="process-grid reveal">
-    <div class="process-step"><div class="step-num">1</div><h4>Give Us a Call</h4></div>
-    <div class="process-step"><div class="step-num">2</div><h4>Provide Address & Time</h4></div>
-    <div class="process-step"><div class="step-num">3</div><h4>Sample Collection</h4></div>
-    <div class="process-step"><div class="step-num">4</div><h4>Transported to Lab</h4></div>
-    <div class="process-step"><div class="step-num">5</div><h4>Processed in Lab</h4></div>
-    <div class="process-step"><div class="step-num">6</div><h4>Reports Delivered</h4></div>
+  <div class="process-steps reveal">
+    <div class="process-step">
+      <div class="step-num">1</div>
+      <div class="step-label">Give Us a Call</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">2</div>
+      <div class="step-label">Provide Address & Time</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">3</div>
+      <div class="step-label">Sample Collection</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">4</div>
+      <div class="step-label">Transported to Lab</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">5</div>
+      <div class="step-label">Processed in Lab</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">6</div>
+      <div class="step-label">Reports Delivered</div>
+    </div>
   </div>
 </section>
 
-<section id="why">
+<!-- Why Us -->
+<section class="why" id="why">
   <div class="why-grid">
     <div>
-      <div class="section-tag reveal">Why Choose Us</div>
+      <div class="section-label reveal">Why Choose Us</div>
       <h2 class="section-title reveal">Dependable. <em>Accurate.</em> Accessible.</h2>
+      <p class="section-sub reveal">Trusted by thousands across South India for fast, hygienic, and precise diagnostics.</p>
       <div class="why-features">
-        <div class="why-feature reveal"><span class="why-icon">🏠</span><h4>Home Collection</h4><p>Sample pickup from your doorstep in under 30 minutes</p></div>
-        <div class="why-feature reveal"><span class="why-icon">📱</span><h4>Digital Reports</h4><p>Receive your results digitally, anywhere, anytime</p></div>
-        <div class="why-feature reveal"><span class="why-icon">🧑‍⚕️</span><h4>Trained Phlebotomists</h4><p>Expert professionals ensuring safe, hygienic collection</p></div>
-        <div class="why-feature reveal"><span class="why-icon">⏱️</span><h4>Timely Delivery</h4><p>Fast turnaround so you never wait for answers</p></div>
+        <div class="why-feature reveal">
+          <div class="why-feature-icon">🏠</div>
+          <div class="why-feature-title">Home Collection</div>
+          <div class="why-feature-desc">Sample pickup from your doorstep in under 30 minutes.</div>
+        </div>
+        <div class="why-feature reveal">
+          <div class="why-feature-icon">📱</div>
+          <div class="why-feature-title">Digital Reports</div>
+          <div class="why-feature-desc">Receive your results digitally, anywhere, anytime.</div>
+        </div>
+        <div class="why-feature reveal">
+          <div class="why-feature-icon">🧑‍⚕️</div>
+          <div class="why-feature-title">Trained Phlebotomists</div>
+          <div class="why-feature-desc">Expert professionals ensuring safe, hygienic collection.</div>
+        </div>
+        <div class="why-feature reveal">
+          <div class="why-feature-icon">⏱️</div>
+          <div class="why-feature-title">Timely Delivery</div>
+          <div class="why-feature-desc">Fast turnaround so you never have to wait for answers.</div>
+        </div>
       </div>
     </div>
     <div class="reveal">
-      <div class="why-accent-box">
-        <h3>Trusted by Thousands Across South India</h3>
-        <div class="why-big-stat"><span class="num">20M+</span><span class="unit">tests processed annually</span></div>
-        <div class="why-big-stat"><span class="num">40</span><span class="unit">years of diagnostic excellence</span></div>
-        <div style="padding: 20px; background: rgba(255,255,255,.05); border-radius: 14px; border: 1px solid rgba(255,255,255,.1);">
-          <p style="color:rgba(255,255,255,.55); font-size:.85rem; margin-bottom:8px;">Serving both walk-in patients and outsourced lab samples from partner facilities across</p>
-          <p style="color:white; font-weight:600;">Hosur · Krishnagiri · Bangalore</p>
+      <div class="why-aside">
+        <div class="why-aside-title">Trusted by thousands across South India</div>
+        <div class="why-stat-row">
+          <div class="why-stat-big">20K</div>
+          <div class="why-stat-desc">Tests processed annually</div>
+        </div>
+        <div class="why-stat-row">
+          <div class="why-stat-big">4</div>
+          <div class="why-stat-desc">Years of diagnostic excellence</div>
+        </div>
+        <div style="padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.15)">
+          <div style="font-size:0.72rem; opacity:0.6; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:0.75rem;">Serving</div>
+          <div class="why-locations">
+            <span class="why-loc-tag">Hosur</span>
+            <span class="why-loc-tag">Krishnagiri</span>
+            <span class="why-loc-tag">Bangalore</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="visit">
-  <div class="section-tag reveal">Get In Touch</div>
-  <h2 class="section-title reveal">Visit Our <em>Centre</em> Today</h2>
-  <p class="section-desc reveal">We're just a call away. Walk in or book a home collection.</p>
-  <div class="visit-cards reveal">
-    <div class="visit-card">
-      <span class="vc-icon">📍</span>
-      <h4>Our Location</h4>
-      <p>1st Floor, 28/29 GKV Towers<br>Near Gunam Hospital<br>Denkanikottai Main Road<br>Hosur – 635 109</p>
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="section-label reveal">Get In Touch</div>
+      <h2 class="section-title reveal">Visit Our <em>Centre</em> Today</h2>
+      <p class="section-sub reveal">We're just a call away. Walk in or book a home collection at your convenience.</p>
+      <div class="contact-info-cards">
+        <div class="contact-card reveal">
+          <div class="contact-card-icon">📍</div>
+          <div>
+            <div class="contact-card-title">Our Location</div>
+            <div class="contact-card-value">1st Floor, 28/29 GKV Towers<br>Near Gunam Hospital, Denkanikottai Main Road<br>Hosur – 635 109</div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-card-icon">📞</div>
+          <div>
+            <div class="contact-card-title">Call Us</div>
+            <div class="contact-card-value">
+              <a href="tel:+918678999009">+91 86789 99009</a><br>
+              <a href="tel:+918111001686">+91 81110 01686</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-card-icon">🏠</div>
+          <div>
+            <div class="contact-card-title">Home Collection</div>
+            <div class="contact-card-value">Safe, hygienic, and on time — our trained phlebotomists come to you.</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="visit-card">
-      <span class="vc-icon">📞</span>
-      <h4>Call Us</h4>
-      <p style="margin-bottom:10px;">We're available to assist you</p>
-      <a href="tel:+918678999009">+91 86789 99009</a>
-      <a href="tel:+918111001686" style="margin-top:6px; display:block;">+91 81110 01686</a>
-    </div>
-    <div class="visit-card">
-      <span class="vc-icon">🏠</span>
-      <h4>Home Collection</h4>
-      <p>Our trained phlebotomists come to you. Safe, hygienic, and on time.</p>
+    <div class="reveal">
+      <div class="map-placeholder">
+        <div class="map-grid-lines"></div>
+        <div class="map-inner">
+          <div class="map-pin">📍</div>
+          <div class="map-label">mytolabs</div>
+          <div class="map-address">
+            28/29 GKV Towers<br>
+            Denkanikottai Main Road<br>
+            Hosur – 635 109
+          </div>
+          <a href="https://maps.google.com/?q=GKV+Towers+Hosur" target="_blank" class="map-link">Open in Google Maps →</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- Footer -->
 <footer>
-  <div class="footer-logo">
-    <img src="https://i.ibb.co/29rWd9T/mytologo.png" alt="myto labs">
-    <span>myto labs</span>
+  <div>
+    <!-- Footer Logo -->
+    <div>
+      <svg height="36" viewBox="0 0 220 48" xmlns="http://www.w3.org/2000/svg" style="display:block">
+        <!-- Mitochondria icon (real logo image) -->
+        <image href="data:image/png;base64,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" x="0" y="2" width="38" height="42"/>
+        <text y="30" font-family="'DM Sans',Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="-0.3"><tspan x="40" fill="white">myto</tspan><tspan fill="rgba(255,255,255,0.55)">labs</tspan></text>
+        <line x1="40" y1="37" x2="52" y2="37" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="55" y="40" font-family="'DM Sans',Arial,sans-serif" font-size="6.5" font-weight="700" fill="rgba(255,255,255,0.35)" letter-spacing="1.2">DISCOVER YOUR CURE</text>
+        <line x1="168" y1="37" x2="180" y2="37" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div style="font-size:0.75rem;margin-top:6px;color:rgba(255,255,255,0.4)">© 2026 mytolabs. All Rights Reserved.</div>
+    </div>
   </div>
-  <p>© 2026 myto labs. All Rights Reserved.</p>
-  <div class="footer-accred">
-    <span class="badge-pill">NABL Accredited</span>
-    <span class="badge-pill">ISO Certified</span>
+  <div class="footer-badges">
+    <span class="footer-badge">NABL Accredited</span>
+    <span class="footer-badge">ISO Certified</span>
   </div>
+  <div class="footer-copy">Hosur · Krishnagiri · Bangalore</div>
 </footer>
 
 <script>
-  const reveals = document.querySelectorAll('.reveal');
+  // ── Cursor
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // ── Nav scroll
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    const spans = hamburger.querySelectorAll('span');
+    if (mobileMenu.classList.contains('open')) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  }
+
+  // ── Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        const delay = entry.target.dataset.delay || 0;
+        setTimeout(() => entry.target.classList.add('visible'), delay * 1000);
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
-
-  window.addEventListener('scroll', () => {
-    document.querySelector('nav').style.background = window.scrollY > 50
-      ? 'rgba(10,22,40,0.99)'
-      : 'rgba(10,22,40,0.96)';
+  }, { threshold: 0.12 });
+  revealEls.forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 0.08 + 's';
+    observer.observe(el);
   });
 </script>
 </body>
-                                                                                                                                                     </html>
+</html>
